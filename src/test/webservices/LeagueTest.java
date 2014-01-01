@@ -1,4 +1,4 @@
-package webservices;
+package test.webservices;
 
 import static org.junit.Assert.*;
 

@@ -14,7 +14,8 @@
     <path id="JUnit 4.libraryclasspath">
         <!--<pathelement location="${ECLIPSE_HOME}/plugins/org.junit_4.8.2.v4_8_2_v20110321-1705/junit.jar"/>-->
         <pathelement location="./lib/junit.zip"/>
-        <pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>
+    	 <pathelement location="./lib/hamcrest.zip"/>
+    	 <!--<pathelement location="${ECLIPSE_HOME}/plugins/org.hamcrest.core_1.1.0.v20090501071000.jar"/>-->
     </path>
     <path id="amazonas-project.classpath">
         <pathelement location="bin"/>

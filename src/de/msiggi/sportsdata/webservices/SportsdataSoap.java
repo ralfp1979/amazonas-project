@@ -25,7 +25,7 @@ public interface SportsdataSoap {
 
 
     /**
-     * Gibt eine Struktur aller verfügbaren Ligen zurück! Erwartet keine Parameter. Das Ergebnis dieser Abfrage unterliegt einem serverseitigen Cache von 600 Sekunden.
+     * Gibt eine Struktur aller verfuegbaren Ligen zurueck! Erwartet keine Parameter. Das Ergebnis dieser Abfrage unterliegt einem serverseitigen Cache von 600 Sekunden.
      * 
      * @return
      *     returns de.msiggi.sportsdata.webservices.ArrayOfLeague
@@ -37,7 +37,7 @@ public interface SportsdataSoap {
     public ArrayOfLeague getAvailLeagues();
 
     /**
-     * Gibt eine Struktur des nächsten anstehenden Spieles der als Parameter zu uebergebenen Liga zurueck.
+     * Gibt eine Struktur des naechsten anstehenden Spieles der als Parameter zu uebergebenen Liga zurueck.
      * 
      * @param leagueShortcut
      * @return
@@ -67,7 +67,7 @@ public interface SportsdataSoap {
         String leagueShortcut);
 
     /**
-     * Gibt eine Struktur des  nächsten anstehenden Spieles des als Parameter zu uebergebenen Teams der ebenfalls zu übergebenen Liga zurueck.
+     * Gibt eine Struktur des  naechsten anstehenden Spieles des als Parameter zu uebergebenen Teams der ebenfalls zu uebergebenen Liga zurueck.
      * 
      * @param leagueId
      * @param teamId
@@ -85,7 +85,7 @@ public interface SportsdataSoap {
         int teamId);
 
     /**
-     * Gibt eine Struktur des zuletzt ausgetragenen Spieles des als Parameter zu uebergebenen Teams der ebenfalls zu übergebenen Liga zurueck.
+     * Gibt eine Struktur des zuletzt ausgetragenen Spieles des als Parameter zu uebergebenen Teams der ebenfalls zu uebergebenen Liga zurueck.
      * 
      * @param leagueId
      * @param teamId
@@ -103,7 +103,7 @@ public interface SportsdataSoap {
         int teamId);
 
     /**
-     * Gibt die aktuelle groupOrderID (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu uebergebenen leagueShortcuts (z.B. 'bl1') aus. Der aktuelle Spieltag wird jeweils zur Hälfte der Zeit zwischen dem letzten Spiel des letzten Spieltages und dem ersten Spiel des nächsten Spieltages erhöht.
+     * Gibt die aktuelle groupOrderID (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu uebergebenen leagueShortcuts (z.B. 'bl1') aus. Der aktuelle Spieltag wird jeweils zur Haelfte der Zeit zwischen dem letzten Spiel des letzten Spieltages und dem ersten Spiel des naechsten Spieltages erhoeht.
      * 
      * @param leagueShortcut
      * @return
@@ -118,7 +118,7 @@ public interface SportsdataSoap {
         String leagueShortcut);
 
     /**
-     * Gibt die aktuelle Group (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu uebergebenen leagueShortcuts (z.B. 'bl1') aus. Der aktuelle Spieltag wird jeweils zur Hälfte der Zeit zwischen dem letzten Spiel des letzten Spieltages und dem ersten Spiel des nächsten Spieltages erhöht.
+     * Gibt die aktuelle Group (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu uebergebenen leagueShortcuts (z.B. 'bl1') aus. Der aktuelle Spieltag wird jeweils zur Haelfte der Zeit zwischen dem letzten Spiel des letzten Spieltages und dem ersten Spiel des naechsten Spieltages erhoeht.
      * 
      * @param leagueShortcut
      * @return
@@ -154,7 +154,7 @@ public interface SportsdataSoap {
         String leagueSaison);
 
     /**
-     * Gibt eine Struktur von Sport-Spieldaten zurueck. Die Beginn-Zeit der ausgegebenen Spieldaten liegt zwischen den als Parameter zu übergebenen DateTime-Werten. (fromDateTime <= matchBeginDateTime < toDateTime)Als weiterer Parameter wird der Liga-Shortcut (z.B. 'bl1') erwartet.
+     * Gibt eine Struktur von Sport-Spieldaten zurueck. Die Beginn-Zeit der ausgegebenen Spieldaten liegt zwischen den als Parameter zu uebergebenen DateTime-Werten. (fromDateTime <= matchBeginDateTime < toDateTime)Als weiterer Parameter wird der Liga-Shortcut (z.B. 'bl1') erwartet.
      * 
      * @param toDateTime
      * @param leagueShortcut
@@ -175,7 +175,7 @@ public interface SportsdataSoap {
         String leagueShortcut);
 
     /**
-     * Gibt eine Struktur von Matches zurück, bei welchen die als Parameter übergebenen Teams gegeneinander spielten.
+     * Gibt eine Struktur von Matches zurueck, bei welchen die als Parameter uebergebenen Teams gegeneinander spielten.
      * 
      * @param teamID1
      * @param teamID2
@@ -232,7 +232,7 @@ public interface SportsdataSoap {
         String leagueSaison);
 
     /**
-     * Gibt eine Struktur deutscher Fussball-Spieldaten zurueck. Diese Methode steht nur noch aus Gründen der Kompatibilität zu älteren Applikationen zur Verfügung. Bitte nutzen sie vorrangig die GetMatchdata... - Methoden!
+     * Gibt eine Struktur deutscher Fussball-Spieldaten zurueck. Diese Methode steht nur noch aus Gruenden der Kompatibilitaet zu aelteren Applikationen zur Verfuegung. Bitte nutzen sie vorrangig die GetMatchdata... - Methoden!
      * 
      * @param userkennung
      * @param liga
@@ -307,7 +307,7 @@ public interface SportsdataSoap {
         String leagueSaison);
 
     /**
-     * Gibt eine Liste der verfügbaren Sportarten, für welche gültige Ligen bestehen, zurück. Erwartet keine Parameter
+     * Gibt eine Liste der verfuegbaren Sportarten, fuer welche gueltige Ligen bestehen, zurueck. Erwartet keine Parameter
      * 
      * @return
      *     returns de.msiggi.sportsdata.webservices.ArrayOfSport
@@ -319,7 +319,7 @@ public interface SportsdataSoap {
     public ArrayOfSport getAvailSports();
 
     /**
-     * Gibt eine Struktur aller verfügbaren Ligen für die zu übergebende SportID zurück. Diese ist aus 'GetAvailSports()' zu entnehmen!
+     * Gibt eine Struktur aller verfuegbaren Ligen fuer die zu uebergebende SportID zurueck. Diese ist aus 'GetAvailSports()' zu entnehmen!
      * 
      * @param sportID
      * @return

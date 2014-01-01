@@ -37,7 +37,7 @@ public interface SportsdataSoap {
     public ArrayOfLeague getAvailLeagues();
 
     /**
-     * Gibt eine Struktur des nächsten anstehenden Spieles der als Parameter zu übergebenden Liga zurueck.
+     * Gibt eine Struktur des nächsten anstehenden Spieles der als Parameter zu uebergebenen Liga zurueck.
      * 
      * @param leagueShortcut
      * @return
@@ -52,7 +52,7 @@ public interface SportsdataSoap {
         String leagueShortcut);
 
     /**
-     * Gibt eine Struktur des zuletzt ausgetragenen Spieles der als Parameter zu übergebenden Liga zurueck.
+     * Gibt eine Struktur des zuletzt ausgetragenen Spieles der als Parameter zu uebergebenen Liga zurueck.
      * 
      * @param leagueShortcut
      * @return
@@ -67,7 +67,7 @@ public interface SportsdataSoap {
         String leagueShortcut);
 
     /**
-     * Gibt eine Struktur des  nächsten anstehenden Spieles des als Parameter zu übergebenden Teams der ebenfalls zu übergebenen Liga zurueck.
+     * Gibt eine Struktur des  nächsten anstehenden Spieles des als Parameter zu uebergebenen Teams der ebenfalls zu übergebenen Liga zurueck.
      * 
      * @param leagueId
      * @param teamId
@@ -85,7 +85,7 @@ public interface SportsdataSoap {
         int teamId);
 
     /**
-     * Gibt eine Struktur des zuletzt ausgetragenen Spieles des als Parameter zu übergebenden Teams der ebenfalls zu übergebenen Liga zurueck.
+     * Gibt eine Struktur des zuletzt ausgetragenen Spieles des als Parameter zu uebergebenen Teams der ebenfalls zu übergebenen Liga zurueck.
      * 
      * @param leagueId
      * @param teamId
@@ -103,7 +103,7 @@ public interface SportsdataSoap {
         int teamId);
 
     /**
-     * Gibt die aktuelle groupOrderID (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu übergebenden leagueShortcuts (z.B. 'bl1') aus. Der aktuelle Spieltag wird jeweils zur Hälfte der Zeit zwischen dem letzten Spiel des letzten Spieltages und dem ersten Spiel des nächsten Spieltages erhöht.
+     * Gibt die aktuelle groupOrderID (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu uebergebenen leagueShortcuts (z.B. 'bl1') aus. Der aktuelle Spieltag wird jeweils zur Hälfte der Zeit zwischen dem letzten Spiel des letzten Spieltages und dem ersten Spiel des nächsten Spieltages erhöht.
      * 
      * @param leagueShortcut
      * @return
@@ -118,7 +118,7 @@ public interface SportsdataSoap {
         String leagueShortcut);
 
     /**
-     * Gibt die aktuelle Group (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu übergebenden leagueShortcuts (z.B. 'bl1') aus. Der aktuelle Spieltag wird jeweils zur Hälfte der Zeit zwischen dem letzten Spiel des letzten Spieltages und dem ersten Spiel des nächsten Spieltages erhöht.
+     * Gibt die aktuelle Group (entspricht z.B. bei der Fussball-Bundesliga dem 'Spieltag') des als Parameter zu uebergebenen leagueShortcuts (z.B. 'bl1') aus. Der aktuelle Spieltag wird jeweils zur Hälfte der Zeit zwischen dem letzten Spiel des letzten Spieltages und dem ersten Spiel des nächsten Spieltages erhöht.
      * 
      * @param leagueShortcut
      * @return
@@ -256,7 +256,7 @@ public interface SportsdataSoap {
         String userkennung);
 
     /**
-     * Gibt eine Struktur des Spieles der als Parameter zu übergebenden MatchID zurueck.
+     * Gibt eine Struktur des Spieles der als Parameter zu uebergebenen MatchID zurueck.
      * 
      * @param matchID
      * @return
@@ -271,7 +271,7 @@ public interface SportsdataSoap {
         int matchID);
 
     /**
-     * Gibt eine Liste aller Teams der als Parameter zu übergebenden Liga + Saison zurueck.
+     * Gibt eine Liste aller Teams der als Parameter zu uebergebenen Liga + Saison zurueck.
      * 
      * @param leagueShortcut
      * @param leagueSaison
@@ -289,7 +289,7 @@ public interface SportsdataSoap {
         String leagueSaison);
 
     /**
-     * Gibt eine Liste der bereits eingetragenen Spiel-Einteilungen (Spieltag, Vorrunde, Finale, ...) der als Parameter zu übergebenden Liga + Saison zurueck.
+     * Gibt eine Liste der bereits eingetragenen Spiel-Einteilungen (Spieltag, Vorrunde, Finale, ...) der als Parameter zu uebergebenen Liga + Saison zurueck.
      * 
      * @param leagueShortcut
      * @param leagueSaison
@@ -334,7 +334,7 @@ public interface SportsdataSoap {
         int sportID);
 
     /**
-     * Gibt eine Liste aller Goals des als Parameter zu übergebenden Match zurueck.
+     * Gibt eine Liste aller Goals des als Parameter zu uebergebenen Match zurueck.
      * 
      * @param matchID
      * @return
@@ -349,7 +349,7 @@ public interface SportsdataSoap {
         int matchID);
 
     /**
-     * Gibt eine Liste aller Goals der als Parameter zu übergebenden Liga + Saison zurueck.
+     * Gibt eine Liste aller Goals der als Parameter zu uebergebenen Liga + Saison zurueck.
      * 
      * @param leagueShortcut
      * @param leagueSaison
@@ -367,7 +367,7 @@ public interface SportsdataSoap {
         String leagueSaison);
 
     /**
-     * Gibt eine Liste der GoalGetter der als Parameter zu übergebenden Liga + Saison zurueck.
+     * Gibt eine Liste der GoalGetter der als Parameter zu uebergebenen Liga + Saison zurueck.
      * 
      * @param leagueShortcut
      * @param leagueSaison
@@ -385,7 +385,7 @@ public interface SportsdataSoap {
         String leagueSaison);
 
     /**
-     * Gibt das Datum der letzten Änderung in der als Parameter zu übergebenden Liga + Saison zurueck. Kann verwendet werden, um clientseitg unnötige Abfragen zu vermeiden (Cache)
+     * Gibt das Datum der letzten Aenderung in der als Parameter zu uebergebenen Liga + Saison zurueck. Kann verwendet werden, um clientseitg unnoetige Abfragen zu vermeiden (Cache)
      * 
      * @param leagueShortcut
      * @param leagueSaison
@@ -403,7 +403,7 @@ public interface SportsdataSoap {
         String leagueSaison);
 
     /**
-     * Gibt das Datum der letzten Änderung in der als Parameter zu übergebenden Liga + Saison zurueck. Kann verwendet werden, um clientseitg unnötige Abfragen zu vermeiden (Cache)
+     * Gibt das Datum der letzten Aenderung in der als Parameter zu uebergebenen Liga + Saison zurueck. Kann verwendet werden, um clientseitg unnoetige Abfragen zu vermeiden (Cache)
      * 
      * @param groupOrderID
      * @param leagueShortcut

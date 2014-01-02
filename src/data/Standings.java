@@ -64,4 +64,10 @@ public class Standings {
 		return indexInList + 1;
 	}
 
+	public Team getTeamAtPosition(int pos) {
+		int index = pos - 1;
+		TeamResult teamResult = results.get(index);
+		return teamResult.getTeam();
+	}
+
 }

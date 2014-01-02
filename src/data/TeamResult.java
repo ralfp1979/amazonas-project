@@ -40,4 +40,8 @@ public class TeamResult implements Comparable<TeamResult> {
 		return this.team.getTeamID() * this.team.getTeamName().hashCode();
 	}
 
+	public Team getTeam() {
+		return this.team;
+	}
+
 }

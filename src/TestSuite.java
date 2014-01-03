@@ -5,6 +5,7 @@ import org.junit.runners.Suite.SuiteClasses;
 import output.SeasonSimulatorTest;
 import output.SimpleDataCollectorTest;
 import output.SimpleFeatureGeneratorTest;
+import output.file.OctaveFileWriterTest;
 import test.integration.DataCollectorIntegrationTest;
 import test.integration.StandingsIntegrationTest;
 import test.webservices.LeagueTest;
@@ -19,7 +20,8 @@ import data.TeamResultTest;
 		StandingsIntegrationTest.class, SeasonSimulatorTest.class,
 		SimpleDataCollectorTest.class, DataAndResultLineTest.class,
 		MatchResolverTest.class, MatchResultTest.class,
-		SimpleFeatureGeneratorTest.class, DataCollectorIntegrationTest.class })
+		SimpleFeatureGeneratorTest.class, DataCollectorIntegrationTest.class,
+		OctaveFileWriterTest.class })
 public class TestSuite {
 
 }

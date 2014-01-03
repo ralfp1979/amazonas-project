@@ -1,6 +1,7 @@
 package test.webservices;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,6 +18,7 @@ public class LeagueTest {
 
 	private static final String SEASON_2012 = "2012";
 	private static final String BL1 = "bl1";
+	private static final String BL2 = "bl2";
 	private SportsdataSoap service;
 
 	@Before
@@ -38,6 +40,25 @@ public class LeagueTest {
 
 		assertEquals("There must be 34*9 matches in one season", 34 * 9,
 				matches.getMatchdata().size());
+	}
+
+	@Test
+	public void availableSeasons() {
+
+		for (int ii = 2006; ii <= 2012; ii++) {
+			ArrayOfMatchdata matches = service.getMatchdataByLeagueSaison(BL1,
+					String.valueOf(ii));
+
+			assertFalse("There must be some matches in BL1 season " + ii,
+					matches.getMatchdata().isEmpty());
+
+			matches = service.getMatchdataByLeagueSaison(BL2,
+					String.valueOf(ii));
+
+			assertFalse("There must be some matches in BL2 season " + ii,
+					matches.getMatchdata().isEmpty());
+		}
+
 	}
 
 	@Test

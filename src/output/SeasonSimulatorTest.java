@@ -34,4 +34,17 @@ public class SeasonSimulatorTest {
 		assertEquals(34 * 9, collector.getDataSize());
 	}
 
+	@Test
+	public void testDataCollectorCallbackWithThreshold() {
+
+		DataCollector collector = new SimpleDataCollector();
+		int skippedGroups = 32;
+		collector.setThreshold(skippedGroups);
+
+		cut.setDataCollector(collector);
+		cut.simulate("bl1", "2011");
+
+		assertEquals((34 - skippedGroups) * 9, collector.getDataSize());
+	}
+
 }

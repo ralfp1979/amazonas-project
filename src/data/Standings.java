@@ -11,6 +11,7 @@ import de.msiggi.sportsdata.webservices.Team;
 public class Standings {
 
 	private final List<TeamResult> results = new ArrayList<TeamResult>();
+	private final MatchResolver matchResolver = new MatchResolver();
 
 	public int getNumberOfTeams() {
 		return results.size();
@@ -30,18 +31,20 @@ public class Standings {
 	}
 
 	private void addResult(Matchdata match) {
-		// DEUCE
-		if (match.getPointsTeam1() == match.getPointsTeam2()) {
+		MatchResult result = matchResolver.getResult(match);
+
+		switch (result) {
+		case HOME:
+			addPointsForTeam(match.getIdTeam1(), 3);
+			break;
+		case AWAY:
+			addPointsForTeam(match.getIdTeam2(), 3);
+			break;
+		case DEUCE:
 			addPointsForTeam(match.getIdTeam1(), 1);
 			addPointsForTeam(match.getIdTeam2(), 1);
-		}
-		// TEAM1 HAS WON
-		else if (match.getPointsTeam1() > match.getPointsTeam2()) {
-			addPointsForTeam(match.getIdTeam1(), 3);
-		}
-		// TEAM2 HAS WON
-		else if (match.getPointsTeam1() < match.getPointsTeam2()) {
-			addPointsForTeam(match.getIdTeam2(), 3);
+			break;
+
 		}
 	}
 

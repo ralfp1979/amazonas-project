@@ -28,7 +28,7 @@ public class StandingsTest {
 		teams.getTeam().add(teamB);
 	}
 
-	static protected Team createTeam(int id, String name) {
+	public static Team createTeam(int id, String name) {
 		Team team = new Team();
 		team.setTeamID(id);
 		team.setTeamName(name);

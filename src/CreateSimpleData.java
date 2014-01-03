@@ -24,27 +24,27 @@ public class CreateSimpleData {
 
 	private DataCollector createReferenceData() {
 		DataCollector data = new SimpleDataCollector();
-		SeasonSimulator season = new SeasonSimulator();
-		season.setDataCollector(data);
+		SeasonSimulator simulator = new SeasonSimulator();
+		simulator.setDataCollector(data);
 
-		System.out.println("Season 2012...");
-		data.setThreshold(4);
-		season.simulate("bl1", "2012");
-
-		System.out.println("Season 2011...");
-		data.setThreshold(4);
-		season.simulate("bl1", "2011");
-
-		System.out.println("Season 2010...");
-		data.setThreshold(4);
-		season.simulate("bl1", "2010");
-
-		System.out.println("Season 2009...");
-		data.setThreshold(4);
-		season.simulate("bl1", "2009");
+		for (int ii = 2006; ii <= 2012; ii++) {
+			addSeason(data, simulator, ii);
+		}
 
 		data.shuffle();
 		return data;
+	}
+
+	private void addSeason(DataCollector data, SeasonSimulator simulator,
+			int season) {
+		String date = String.valueOf(season);
+		System.out.println("Season " + date + "...");
+
+		data.setThreshold(4);
+		simulator.simulate("bl1", date);
+
+		data.setThreshold(4);
+		simulator.simulate("bl2", date);
 	}
 
 }

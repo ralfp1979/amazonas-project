@@ -32,16 +32,26 @@ num_labels = 3;          % 3 labels, from 1 to 3 ( Home, Deuce, Away)
 % Load Training Data
 fprintf('Loading ...\n')
 
-load('Xtrain.dat');
-X = Xtrain(1:800,:);
-X2 =  Xtrain(801:1080,:);
+fprintf('Configuration: %i - %i - %i\n', input_layer_size, hidden_layer_size, num_labels);
+load('simple_x.dat');
+load('simple_y.dat');
+
+m_total = size(simple_x, 1);
+fprintf('total: %i\n', m_total);
+
+m_train = m_total / 10 * 6;
+m_small = m_total / 10 * 2;
 
 
-load('ytrain.dat');
-y = ytrain(1:800,:);
-y2 =  ytrain(801:1080,:);
+Xtrain =  simple_x(1:m_train,:);
+Xveri  =  simple_x(m_train+1:m_train+m_small,:);
+Xtest  =  simple_x(m_train+m_small+1:m_total,:);
 
-m = size(X, 1);
+ytrain =  simple_y(1:m_train,:);
+yveri  =  simple_y(m_train+1:m_train+m_small,:);
+ytest  =  simple_y(m_train+m_small+1:m_total,:);
+
+m = size(Xtrain, 1);
 
 printf('%i examples...',m);
 
@@ -53,6 +63,14 @@ printf('%i examples...',m);
 %  (randInitializeWeights.m)
 
 fprintf('\nInitializing Neural Network Parameters ...\n')
+
+%for lambda = 0:0.5:2
+for lambda = 0.5:0.5
+
+%  You should also try different values of lambda
+%  lambda = 1;
+fprintf('\nUsing lambda: %.1f\n', lambda);
+
 
 initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
 initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
@@ -72,31 +90,39 @@ fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-maxIter = 100
+maxIter = 10
 options = optimset('MaxIter', maxIter);
 
-%  You should also try different values of lambda
-lambda = 1;
 
 % Create "short hand" for the cost function to be minimized
 costFunction = @(p) nnCostFunction(p, ...
                                    input_layer_size, ...
                                    hidden_layer_size, ...
-                                   num_labels, X, y, lambda);
+                                   num_labels, Xtrain, ytrain, lambda);
 
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)
 [nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
 
-plotX = 1:maxIter;
+%plotX = 1:maxIter;
 plotY = cost';
 
+diff = ((cost(1)-cost(maxIter))/cost(1));
+fprintf('diff: %.4f%%\n', diff*100);
 
-%for i = 2:5
- %[nn_params, cost] = fmincg(costFunction, nn_params, options);
+for i = 2:30
+ [nn_params, cost] = fmincg(costFunction, nn_params, options);
  %plotX = [plotX i];
- %plotY = [plotY cost(1)];
-%end
+ plotY = [plotY cost'];
+
+diff = ((cost(1)-cost(maxIter))/cost(1));
+fprintf('diff: %.4f%%\n', diff*100);
+  if (diff<0.0001)
+    break;
+  end
+end
+          
+plotX = 1:length(plotY);
 
 % Obtain Theta1 and Theta2 back from nn_params
 Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
@@ -105,9 +131,8 @@ Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
 Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
                  num_labels, (hidden_layer_size + 1));
 
-fprintf('Program paused. Press enter to continue.\n');
-pause;
-
+fprintf('%i iterations of learning. Plot will follow...\n',length(plotY));
+%pause;
 
 plot(plotX,plotY);
 
@@ -117,10 +142,12 @@ plot(plotX,plotY);
 %  neural network to predict the labels of the training set. This lets
 %  you compute the training set accuracy.
 
-pred = predict(Theta1, Theta2, X);
-fprintf('\nTraining Set Accuracy: %f\n', mean(double(pred == y)) * 100);
-pred = predict(Theta1, Theta2, X2);
-fprintf('\nTest Set Accuracy: %f\n', mean(double(pred == y2)) * 100);
+pred = predict(Theta1, Theta2, Xtrain);
+fprintf('\nTraining Set Accuracy: %.2f%%\n', mean(double(pred == ytrain)) * 100);
+pred = predict(Theta1, Theta2, Xveri);
+fprintf('Verification Set Accuracy: %.2f%%\n', mean(double(pred == yveri)) * 100);
+pred = predict(Theta1, Theta2, Xtest);
+fprintf('Test Set Accuracy: %.2f%%\n', mean(double(pred == ytest)) * 100);
 
-
+end %lambda
 

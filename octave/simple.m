@@ -15,6 +15,10 @@
 %  or any other files other than those mentioned above.
 %
 
+%Training Set Accuracy: 45.90%
+%Verification Set Accuracy: 44.58%
+%Test Set Accuracy: 45.37%
+
 %% Initialization
 clear ; close all; clc
 
@@ -64,7 +68,7 @@ printf('%i examples...',m);
 
 fprintf('\nInitializing Neural Network Parameters ...\n')
 
-%for lambda = 0:0.5:2
+%for lambda = 0:0.5:2.5
 for lambda = 0.5:0.5
 
 %  You should also try different values of lambda
@@ -108,7 +112,7 @@ costFunction = @(p) nnCostFunction(p, ...
 plotY = cost';
 
 diff = ((cost(1)-cost(maxIter))/cost(1));
-fprintf('diff: %.4f%%\n', diff*100);
+fprintf('-> improved %.1f%%\n', diff*100);
 
 for i = 2:30
  [nn_params, cost] = fmincg(costFunction, nn_params, options);
@@ -116,8 +120,8 @@ for i = 2:30
  plotY = [plotY cost'];
 
 diff = ((cost(1)-cost(maxIter))/cost(1));
-fprintf('diff: %.4f%%\n', diff*100);
-  if (diff<0.0001)
+fprintf('-> improved %.1f%%\n', diff*100);
+  if (diff<0.005)
     break;
   end
 end
@@ -149,5 +153,23 @@ fprintf('Verification Set Accuracy: %.2f%%\n', mean(double(pred == yveri)) * 100
 pred = predict(Theta1, Theta2, Xtest);
 fprintf('Test Set Accuracy: %.2f%%\n', mean(double(pred == ytest)) * 100);
 
+          h1 = sum(pred == ytest == 1);
+          h2 = sum(ytest == 1);
+          d1 = sum(pred == ytest == 2);
+          d2 = sum(ytest == 2);
+          a1 = sum(pred == ytest == 3);
+          a2 = sum(ytest == 3);
+          
+          h = h1 / h2;
+          d = d1 / d2;
+          a = a1 / a2;
+          
+          fprintf('Accuracy Detail: %.2f%%/%.2f%%/%.2f%%\n', h*100,d*100,a*100);
+          
+          score = 3 * (h*d*a) / (h+d+a);
+          fprintf('Overall Score: %.2f\n', score);
+          
+
+          
 end %lambda
 

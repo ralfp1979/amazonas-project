@@ -19,7 +19,7 @@
 clear ; close all; clc
 
 %% Setup the parameters you will use for this exercise
-input_layer_size  = 2;  % 2 features
+input_layer_size  = 4;  % 2 features
 hidden_layer1_size = 10;   % 10 hidden units
 hidden_layer2_size = 8;   % 10 hidden units
 num_labels = 3;          % 3 labels, from 1 to 3 ( Home, Deuce, Away)
@@ -44,6 +44,7 @@ load('fake_x.txt');
 load('fake_y.txt');
 %simple_x = fake_x;
 %simple_y = fake_y;
+%fake = 1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 m_total = size(simple_x, 1);
@@ -52,14 +53,23 @@ fprintf('total: %i\n', m_total);
 m_train = m_total / 10 * 6;
 m_small = m_total / 10 * 2;
 
+new_feature = simple_x(:,1) - simple_x(:,2);
+new_feature2 =  simple_x(:,2) - simple_x(:,1);
+simple_x = [simple_x new_feature new_feature2];
 
-Xtrain =  simple_x(1:m_train,:);
+Xtrain_total =  simple_x(1:m_train,:);
 Xveri  =  simple_x(m_train+1:m_train+m_small,:);
 Xtest  =  simple_x(m_train+m_small+1:m_total,:);
 
-ytrain =  simple_y(1:m_train,:);
+ytrain_total =  simple_y(1:m_train,:);
 yveri  =  simple_y(m_train+1:m_train+m_small,:);
 ytest  =  simple_y(m_train+m_small+1:m_total,:);
+
+%for trainSize = 100:200:m_train
+for trainSize = m_train:m_train
+
+Xtrain = Xtrain_total(1:trainSize,:);
+ytrain = ytrain_total(1:trainSize,:);
 
 m = size(Xtrain, 1);
 
@@ -148,7 +158,7 @@ Theta3 = reshape(nn_params((1 + (n1+n2)):end), ...
 fprintf('%i iterations of learning. Plot will follow...\n',length(plotY));
 %pause;
 
-plot(plotX,plotY);
+%plot(plotX,plotY);
 
 %% ================= Part 10: Implement Predict =================
 %  After training the neural network, we would like to use it to predict
@@ -171,3 +181,5 @@ fprintf('Test Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(doubl
           
 end %lambda
 
+            
+end %trainSize

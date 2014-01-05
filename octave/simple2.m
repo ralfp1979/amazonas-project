@@ -20,7 +20,8 @@ clear ; close all; clc
 
 %% Setup the parameters you will use for this exercise
 input_layer_size  = 2;  % 2 features
-hidden_layer_size = 10;   % 10 hidden units
+hidden_layer1_size = 10;   % 10 hidden units
+hidden_layer2_size = 8;   % 10 hidden units
 num_labels = 3;          % 3 labels, from 1 to 3 ( Home, Deuce, Away)
 
 learningThreshold=0.0005
@@ -34,15 +35,15 @@ maxIter = 10
 % Load Training Data
 fprintf('Loading ...\n')
 
-fprintf('Configuration: %i - %i - %i\n', input_layer_size, hidden_layer_size, num_labels);
+fprintf('Configuration: %i - %i - %i - %i\n', input_layer_size, hidden_layer1_size, hidden_layer2_size, num_labels);
 load('simple_x.dat');
 load('simple_y.dat');
 
 %%%%%%%%%%%%%%%% FAKE DATA %%%%%%%%%%%%%%%%%%%
 load('fake_x.txt');
 load('fake_y.txt');
-simple_x = fake_x;
-simple_y = fake_y;
+%simple_x = fake_x;
+%simple_y = fake_y;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 m_total = size(simple_x, 1);
@@ -64,15 +65,7 @@ m = size(Xtrain, 1);
 
 printf('%i examples...',m);
 
-
-%% ================ Part 6: Initializing Pameters ================
-%  In this part of the exercise, you will be starting to implment a two
-%  layer neural network that classifies digits. You will start by
-%  implementing a function to initialize the weights of the neural network
-%  (randInitializeWeights.m)
-
 fprintf('\nInitializing Neural Network Parameters ...\n')
-
 %for lambda = 0:0.5:2.5
 for lambda = 0.5:0.5
 
@@ -81,11 +74,18 @@ for lambda = 0.5:0.5
 fprintf('\nUsing lambda: %.1f\n', lambda);
 
 
-initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer_size);
-initial_Theta2 = randInitializeWeights(hidden_layer_size, num_labels);
+initial_Theta1 = randInitializeWeights(input_layer_size, hidden_layer1_size);
+n1 = size(initial_Theta1,1) * size(initial_Theta1,2);
+
+initial_Theta2 = randInitializeWeights(hidden_layer1_size, hidden_layer2_size);
+n2 = size(initial_Theta2,1) * size(initial_Theta2,2);
+
+initial_Theta3 = randInitializeWeights(hidden_layer2_size, num_labels);
+n3 = size(initial_Theta3,1) * size(initial_Theta3,2);
+
 
 % Unroll parameters
-initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:)];
+initial_nn_params = [initial_Theta1(:) ; initial_Theta2(:), ; initial_Theta3(:)];
 
 
 %% =================== Part 8: Training NN ===================
@@ -103,10 +103,11 @@ options = optimset('MaxIter', maxIter);
 
 
 % Create "short hand" for the cost function to be minimized
-costFunction = @(p) nnCostFunction(p, ...
-                                   input_layer_size, ...
-                                   hidden_layer_size, ...
-                                   num_labels, Xtrain, ytrain, lambda);
+costFunction = @(p) nnCostFunction2(p, ...
+                                    input_layer_size, ...
+                                    hidden_layer1_size, ...
+                                    hidden_layer2_size, ...
+                                    num_labels, Xtrain, ytrain, lambda);
 
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)
@@ -134,12 +135,15 @@ end
           
 plotX = 1:length(plotY);
 
-% Obtain Theta1 and Theta2 back from nn_params
-Theta1 = reshape(nn_params(1:hidden_layer_size * (input_layer_size + 1)), ...
-                 hidden_layer_size, (input_layer_size + 1));
+% Obtain Theta1,Theta2,Theta3 back from nn_params
+Theta1 = reshape(nn_params(1:n1), ...
+                 hidden_layer1_size, (input_layer_size + 1));
 
-Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):end), ...
-                 num_labels, (hidden_layer_size + 1));
+Theta2 = reshape(nn_params((1 + n1):n1+n2), ...
+                 hidden_layer2_size, (hidden_layer1_size + 1));
+
+Theta3 = reshape(nn_params((1 + (n1+n2)):end), ...
+                        num_labels, (hidden_layer2_size + 1));
 
 fprintf('%i iterations of learning. Plot will follow...\n',length(plotY));
 %pause;
@@ -152,15 +156,15 @@ plot(plotX,plotY);
 %  neural network to predict the labels of the training set. This lets
 %  you compute the training set accuracy.
 
-pred = predict(Theta1, Theta2, Xtrain);
+pred = predict2(Theta1, Theta2, Theta3, Xtrain);
 [score, stats] = calculateScore(pred, ytrain);
 fprintf('\nTraining Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == ytrain)) * 100,stats(1), stats(2), stats(3), score);
 
-pred = predict(Theta1, Theta2, Xveri);
+pred = predict2(Theta1, Theta2, Theta3, Xveri);
 [score, stats] = calculateScore(pred, yveri);
 fprintf('Verification Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == yveri)) * 100,stats(1), stats(2), stats(3), score);
 
-pred = predict(Theta1, Theta2, Xtest);
+pred = predict2(Theta1, Theta2, Theta3, Xtest);
 [score, stats] = calculateScore(pred, ytest);
 fprintf('Test Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == ytest)) * 100,stats(1), stats(2), stats(3), score);
 

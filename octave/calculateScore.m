@@ -1,12 +1,19 @@
 function [score, stats] = calculateScore(pred, y)
 
+%[pred y (y == 2) ((pred == y) .* (y == 2))]
+matches = (pred == y);
 
-h1 = sum(pred == y == 1);
-h2 = sum(y == 1);
-d1 = sum(pred == y == 2);
-d2 = sum(y == 2);
-a1 = sum(pred == y == 3);
-a2 = sum(y == 3);
+home = (y == 1);
+h1 = sum(matches .* home);
+h2 = sum(home);
+
+deuce = (y == 2);
+d1 = sum(matches .* deuce);
+d2 = sum(deuce);
+
+away = (y == 3);
+a1 = sum(matches .* away);
+a2 = sum(away);
 
 h = h1 / h2;
 d = d1 / d2;

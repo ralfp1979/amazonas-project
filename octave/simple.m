@@ -15,10 +15,6 @@
 %  or any other files other than those mentioned above.
 %
 
-%Training Set Accuracy: 45.90%
-%Verification Set Accuracy: 44.58%
-%Test Set Accuracy: 45.37%
-
 %% Initialization
 clear ; close all; clc
 
@@ -27,7 +23,7 @@ input_layer_size  = 2;  % 2 features
 hidden_layer_size = 10;   % 10 hidden units
 num_labels = 3;          % 3 labels, from 1 to 3 ( Home, Deuce, Away)
 
-learningThreshold=0.1 %0.005
+learningThreshold=0.005
 maxIter = 10
 
 %% =========== Part 1: Loading and Visualizing Data =============
@@ -41,6 +37,13 @@ fprintf('Loading ...\n')
 fprintf('Configuration: %i - %i - %i\n', input_layer_size, hidden_layer_size, num_labels);
 load('simple_x.dat');
 load('simple_y.dat');
+
+%%%%%%%%%%%%%%%% FAKE DATA %%%%%%%%%%%%%%%%%%%
+%load('fake_x.dat');
+%load('fake_y.dat');
+%simple_x = fake_x;
+%simple_y = fake_y;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 m_total = size(simple_x, 1);
 fprintf('total: %i\n', m_total);

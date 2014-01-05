@@ -27,6 +27,8 @@ input_layer_size  = 2;  % 2 features
 hidden_layer_size = 10;   % 10 hidden units
 num_labels = 3;          % 3 labels, from 1 to 3 ( Home, Deuce, Away)
 
+learningThreshold=0.1 %0.005
+maxIter = 10
 
 %% =========== Part 1: Loading and Visualizing Data =============
 %  We start the exercise by first loading and visualizing the dataset. 
@@ -94,7 +96,6 @@ fprintf('\nTraining Neural Network... \n')
 
 %  After you have completed the assignment, change the MaxIter to a larger
 %  value to see how more training helps.
-maxIter = 10
 options = optimset('MaxIter', maxIter);
 
 
@@ -106,24 +107,26 @@ costFunction = @(p) nnCostFunction(p, ...
 
 % Now, costFunction is a function that takes in only one argument (the
 % neural network parameters)
-[nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
+%[nn_params, cost] = fmincg(costFunction, initial_nn_params, options);
 
 %plotX = 1:maxIter;
-plotY = cost';
+%plotY = cost';
 
-diff = ((cost(1)-cost(maxIter))/cost(1));
-fprintf('-> improved %.1f%%\n', diff*100);
+%diff = ((cost(1)-cost(maxIter))/cost(1));
+%fprintf('-> improved %.1f%%\n', diff*100);
 
-for i = 2:30
- [nn_params, cost] = fmincg(costFunction, nn_params, options);
- %plotX = [plotX i];
- plotY = [plotY cost'];
+nn_params = initial_nn_params;
+plotY = [];
 
-diff = ((cost(1)-cost(maxIter))/cost(1));
-fprintf('-> improved %.1f%%\n', diff*100);
-  if (diff<0.005)
-    break;
-  end
+for i = 1:25
+   [nn_params, cost] = fmincg(costFunction, nn_params, options);
+   plotY = [plotY cost'];
+
+   diff = ((cost(1)-cost(maxIter))/cost(1));
+   fprintf('-> improved %.1f%%\n', diff*100);
+   if (diff<learningThreshold)
+      break;
+   end
 end
           
 plotX = 1:length(plotY);
@@ -147,28 +150,16 @@ plot(plotX,plotY);
 %  you compute the training set accuracy.
 
 pred = predict(Theta1, Theta2, Xtrain);
-fprintf('\nTraining Set Accuracy: %.2f%%\n', mean(double(pred == ytrain)) * 100);
-pred = predict(Theta1, Theta2, Xveri);
-fprintf('Verification Set Accuracy: %.2f%%\n', mean(double(pred == yveri)) * 100);
-pred = predict(Theta1, Theta2, Xtest);
-fprintf('Test Set Accuracy: %.2f%%\n', mean(double(pred == ytest)) * 100);
+[score, stats] = calculateScore(pred, ytrain);
+fprintf('\nTraining Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == ytrain)) * 100,stats(1), stats(2), stats(3), score);
 
-          h1 = sum(pred == ytest == 1);
-          h2 = sum(ytest == 1);
-          d1 = sum(pred == ytest == 2);
-          d2 = sum(ytest == 2);
-          a1 = sum(pred == ytest == 3);
-          a2 = sum(ytest == 3);
-          
-          h = h1 / h2;
-          d = d1 / d2;
-          a = a1 / a2;
-          
-          fprintf('Accuracy Detail: %.2f%%/%.2f%%/%.2f%%\n', h*100,d*100,a*100);
-          
-          score = 3 * (h*d*a) / (h+d+a);
-          fprintf('Overall Score: %.2f\n', score);
-          
+pred = predict(Theta1, Theta2, Xveri);
+[score, stats] = calculateScore(pred, yveri);
+fprintf('Verification Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == yveri)) * 100,stats(1), stats(2), stats(3), score);
+
+pred = predict(Theta1, Theta2, Xtest);
+[score, stats] = calculateScore(pred, ytest);
+fprintf('Test Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == ytest)) * 100,stats(1), stats(2), stats(3), score);
 
           
 end %lambda

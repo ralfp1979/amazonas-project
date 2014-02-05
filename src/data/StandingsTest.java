@@ -15,6 +15,8 @@ public class StandingsTest {
 	private ArrayOfTeam teams;
 	private Team teamA;
 	private Team teamB;
+	private Team teamC;
+	private Team teamD;
 
 	@Before
 	public void setUp() throws Exception {
@@ -26,6 +28,12 @@ public class StandingsTest {
 
 		teamB = createTeam(2, "B");
 		teams.getTeam().add(teamB);
+
+		teamC = createTeam(3, "C");
+		teams.getTeam().add(teamC);
+
+		teamD = createTeam(4, "D");
+		teams.getTeam().add(teamD);
 	}
 
 	public static Team createTeam(int id, String name) {
@@ -63,6 +71,27 @@ public class StandingsTest {
 		cut.add(match);
 
 		assertEquals(2, cut.getPositionOfTeam(teamA));
+	}
+
+	@Test
+	public void testBestAwayAndHomeTeam() throws Exception {
+		cut.init(teams);
+
+		Matchdata match = createMatch(teamA, teamB, 1, 3);
+		cut.add(match);
+
+		match = createMatch(teamA, teamB, 1, 1);
+		cut.add(match);
+
+		match = createMatch(teamA, teamC, 1, 0);
+		cut.add(match);
+
+		match = createMatch(teamC, teamD, 1, 1);
+		cut.add(match);
+
+		assertEquals(1, cut.getHomePositionOfTeam(teamA));
+		assertEquals(1, cut.getAwayPositionOfTeam(teamB));
+		assertEquals(2, cut.getAwayPositionOfTeam(teamD));
 	}
 
 	private Matchdata createMatch(Team team1, Team team2, int points1,

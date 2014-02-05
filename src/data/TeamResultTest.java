@@ -54,4 +54,11 @@ public class TeamResultTest {
 		assertTrue(resultA.equals(teamA));
 		assertFalse(resultB.equals(teamA));
 	}
+
+	@Test
+	public void testClone() throws Exception {
+		assertTrue(resultA.equals(resultA.clone()));
+		assertFalse(resultB == resultB.clone());
+	}
+
 }

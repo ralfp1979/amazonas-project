@@ -2,7 +2,7 @@ package data;
 
 import de.msiggi.sportsdata.webservices.Team;
 
-public class TeamResult implements Comparable<TeamResult> {
+public class TeamResult implements Comparable<TeamResult>, Cloneable {
 
 	private int points = 0;
 	private final Team team;
@@ -42,6 +42,13 @@ public class TeamResult implements Comparable<TeamResult> {
 
 	public Team getTeam() {
 		return this.team;
+	}
+
+	@Override
+	public TeamResult clone() {
+		TeamResult clone = new TeamResult(this.team);
+		clone.points = points;
+		return clone;
 	}
 
 }

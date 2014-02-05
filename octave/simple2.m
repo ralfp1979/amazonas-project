@@ -19,7 +19,7 @@
 clear ; close all; clc
 
 %% Setup the parameters you will use for this exercise
-input_layer_size  = 4;  % 2 features
+input_layer_size  = 3;  %3 features
 hidden_layer1_size = 10;   % 10 hidden units
 hidden_layer2_size = 8;   % 10 hidden units
 num_labels = 3;          % 3 labels, from 1 to 3 ( Home, Deuce, Away)
@@ -53,9 +53,11 @@ fprintf('total: %i\n', m_total);
 m_train = m_total / 10 * 6;
 m_small = m_total / 10 * 2;
 
-new_feature = simple_x(:,1) - simple_x(:,2);
-new_feature2 =  simple_x(:,2) - simple_x(:,1);
-simple_x = [simple_x new_feature new_feature2];
+f1 = simple_x(:,1) * 2 - 1;
+f2 = simple_x(:,2) * 2 - 1;
+f3 = (simple_x(:,1) - simple_x(:,2)) / 2;
+
+simple_x = [f1 f2 f3];
 
 Xtrain_total =  simple_x(1:m_train,:);
 Xveri  =  simple_x(m_train+1:m_train+m_small,:);
@@ -66,6 +68,7 @@ yveri  =  simple_y(m_train+1:m_train+m_small,:);
 ytest  =  simple_y(m_train+m_small+1:m_total,:);
 
 %for trainSize = 100:200:m_train
+%for trainSize = [100 1000 m_train]
 for trainSize = m_train:m_train
 
 Xtrain = Xtrain_total(1:trainSize,:);
@@ -76,7 +79,7 @@ m = size(Xtrain, 1);
 printf('%i examples...',m);
 
 fprintf('\nInitializing Neural Network Parameters ...\n')
-%for lambda = 0:0.5:2.5
+%for lambda = 0.5:-0.1:0
 for lambda = 0.5:0.5
 
 %  You should also try different values of lambda
@@ -168,17 +171,19 @@ fprintf('%i iterations of learning. Plot will follow...\n',length(plotY));
 
 pred = predict2(Theta1, Theta2, Theta3, Xtrain);
 [score, stats] = calculateScore(pred, ytrain);
-fprintf('\nTraining Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == ytrain)) * 100,stats(1), stats(2), stats(3), score);
+fprintf('\nTraining Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.2f\n', mean(double(pred == ytrain)) * 100,stats(1), stats(2), stats(3), score);
 
 pred = predict2(Theta1, Theta2, Theta3, Xveri);
 [score, stats] = calculateScore(pred, yveri);
-fprintf('Verification Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == yveri)) * 100,stats(1), stats(2), stats(3), score);
+fprintf('Verification Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.2f\n', mean(double(pred == yveri)) * 100,stats(1), stats(2), stats(3), score);
 
-pred = predict2(Theta1, Theta2, Theta3, Xtest);
+[pred, h3] = predict2(Theta1, Theta2, Theta3, Xtest);
 [score, stats] = calculateScore(pred, ytest);
-fprintf('Test Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.1f\n', mean(double(pred == ytest)) * 100,stats(1), stats(2), stats(3), score);
+fprintf('Test Set Accuracy: %.2f%% (%.1f%%/%.1f%%/%.1f%%) => %.2f\n', mean(double(pred == ytest)) * 100,stats(1), stats(2), stats(3), score);
 
-          
+            %debug =[(pred == ytest) ytest h3];
+            %debug(1:10,:);
+            
 end %lambda
 
             

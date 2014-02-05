@@ -17,9 +17,10 @@ a2 = sum(away);
 
 h = h1 / h2;
 d = d1 / d2;
+dx = (1 + d) / 2;
 a = a1 / a2;
 
-score = 3 * (h*d*a) / (h+d+a);
+score = 3 * (h*dx*a) / (h+dx+a);
 
 stats = zeros(3,1);
 
